@@ -1,0 +1,128 @@
+@charset "UTF-8";
+
+.header {
+	margin: 0 auto;
+	width: 100%;
+}
+
+.logo {
+	
+}
+
+#nav {
+	height: 35px;
+	line-height: 35px;
+	background-color: #2ABFAA;
+}
+
+#nav ul {
+	list-style-type: none;
+	margin: 0 auto;
+	width: 100%;
+}
+
+#nav li {
+	float: left;
+	width: 10%;
+	text-align: center
+}
+
+#nav li a:link {
+	font-size: 15px;
+	color: #000000;
+	width: 50px;
+	text-decoration: none;
+	text-align: center;
+	font-family: "宋体";
+}
+
+#nav li a:hover {
+	color: #F00
+}
+
+.s1 {
+	border: solid 1px #000000;
+	margin-bottom: 5px;
+}
+
+.s2 {
+	border: solid 1px #000000;
+	margin-top: 5px;
+}
+
+.s3 {
+	height: 60px;
+	clear: both;
+}
+
+.s4 {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 20px;
+	line-height: 30px;
+	font-family: "宋体";
+	color: #FF5F00;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.s5 {
+	border: solid 1px #000000;
+	width: 90%;
+	margin: 0 auto
+}
+
+.form {
+	width: 90%;
+	height: 230px;
+	margin: 20px auto;
+	border: 1px solid #D4BFFF;
+}
+
+.inputstyle {
+	font-size: 14px;
+	font-family: "宋体";
+	line-height: 40px;
+}
+
+.btn {
+	width: 70px;
+	margin-left: 100px;
+	margin-top: 10px;
+}
+
+.s6 {
+	width: 90%;
+	margin: 10px auto;
+	font-size: 14px;
+	color: #FF5F00;
+	font-family: "宋体";
+	font-weight: bold;
+}
+
+.s7 {
+	width: 90%;
+	margin: 10px auto;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: bold;
+	border-color: #CC1D92;
+	text-align: center;
+	line-height: 20px;
+}
+
+.tab {
+	font-size: 12px;
+	font-weight: bold;
+	border-color: #A0A0A4;
+}
+
+.footer {
+	height: 20px;
+	width: 100%;
+	background-color: #2ABFAA;
+	margin-top: 200px;
+	font-size: 15px;
+	text-align: center;
+	color: #FFF
+}
