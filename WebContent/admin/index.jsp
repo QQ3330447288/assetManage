@@ -5,6 +5,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 	String admin = (String) session.getAttribute("admin");
+	//System.out.print(admin);
 	if (admin == null || "".equals(admin)) {
 		response.sendRedirect("" + path + "/admin/login.jsp");
 	}

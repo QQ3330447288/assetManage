@@ -20,7 +20,7 @@
 	} else {
 %>
 <div>欢迎【<%=admin%>】登录系统</div>
-<div>退出系统</div>
+<div><a href="<%=path%>/SignOutServ">退出系统</a></div>
 <%
 	}
 %>
