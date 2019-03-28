@@ -19,13 +19,13 @@
 	<div class="kg">
 		<div class=" form1">
 			<form action="<%=path %>/LoginServ" name="form2" method="post">
-				用户名:<input name="name" type="text" /><br />
+				用户名:<input name="name" type="text" autofocus="autofocus" /><br />
 				密&nbsp;&nbsp;码:<input name="pwd" type="password" /> 
 				<br /> 
 				<br /> 
 				<br /> 
-				<input name="submit" type="submit" class="z" value="登录" onClick="mycheck()"> &nbsp;&nbsp; 
-				<input type="reset" name="Submit2" value="重置" class="z" />
+				<input type="button" class="z" value="登录" onclick="mycheck()">
+				<input type="reset" value="重置" class="z" />
 			</form>
 		</div>
 	</div>
