@@ -1,3 +1,6 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="entity.AssetInfo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -16,36 +19,41 @@
 <meta charset="UTF-8">
 <title>资产管理</title>
 <link rel="stylesheet" href="<%=path%>/static/css/public.css" />
+<style>
+#nav>ul>li>#item1{
+color:red
+}
+</style>
 </head>
-<body>
+<body onload="showTime();">
 	<jsp:include page="top.jsp" />
 	<jsp:include page="nav.jsp" />
 	<div class="s2"></div>
-	<div class="s3">
-		<div class="s4">
-			<img src="<%=path%>/static/images/Search.png" width="50" height="50" />资产详细信息列表
-		</div>
-		<div class="button">
-			<a href="addAssets.jsp"><input name="" type="button" value="增加资产信息" /></a>
-		</div>
-	</div>
 	<div class="s5"></div>
-	<table width="00" border="1" class="tab" cellpadding="0"
-		cellspacing="0">
-		<tr>
-			<td align="center" bgcolor="#FFBF55">资产编号</td>
-			<td align="center" bgcolor="#FFBF55">资产名称</td>
-			<td align="center" bgcolor="#FFBF55">生产厂商</td>
-			<td align="center" bgcolor="#FFBF55">单价</td>
-			<td align="center" bgcolor="#FFBF55">数量</td>
-			<td align="center" bgcolor="#FFBF55">使用单位</td>
-			<td align="center" bgcolor="#FFBF55">存放地点</td>
-			<td align="center" bgcolor="#FFBF55">负责人</td>
-			<td align="center" bgcolor="#FFBF55">资产类型</td>
-			<td align="center" bgcolor="#FFBF55">状态</td>
-			<td align="center" bgcolor="#FFBF55">操作</td>
-		</tr>
-	</table>
+	<h4>欢迎使用本系统，</h4>
+	<h4>
+		当前时间：<span id="show"></span>
+	</h4>
 	<%@include file="bottom.jsp"%>
 </body>
+<script type="text/javascript">
+	function showTime() {
+	var nowTime = new Date();
+	　　　　var years = nowTime.getFullYear();
+	　　　　var mouths = nowTime.getMonth();
+	　　　　var days = nowTime.getDate();
+	　　　　var hours = nowTime.getHours();
+	　　　　var minites = nowTime.getMinutes();
+	　　　　var seconds = nowTime.getSeconds();
+	　　　　var time = years+"年";
+	　　　　time += (mouths+1)+"月"+days+"日";
+	　　　　time += (hours<10?"0":"")+hours;
+	　　　　time += (minites<10?":0":":") + minites;
+	　　　　time += (seconds<10?":0":":") + seconds;
+	　　　　time += (hours>12)?"PM":"AM";
+	　　　　document.getElementById("show").innerHTML = time;
+	　　　　setTimeout("showTime()",1000);
+	　　　　}
+	</script>
+	
 </html>
