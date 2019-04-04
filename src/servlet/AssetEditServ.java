@@ -30,7 +30,7 @@ public class AssetEditServ extends HttpServlet {
 		assetInfo.setRemark(request.getParameter("remark"));
 		AdminDao aDao = new AdminDao();
 		if(aDao.assetEdit(assetInfo)) {
-			request.getRequestDispatcher("/QueryEditAssetServ").forward(request, response);
+			request.getRequestDispatcher("/QueryAssetInfoServ").forward(request, response);
 		}
 	}
 }

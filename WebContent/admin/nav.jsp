@@ -7,7 +7,7 @@
 	<ul>
 		<li><a href="<%=path%>/admin/index.jsp" id="item1">首页</a></li>
 		<li><a href="<%=path%>/QueryAssetInfoServ" id="item2">资产管理</a></li>
-		<li><a href="<%=path%>/admin/borrowReturnManage.jsp" id="item3">借还管理</a></li>
+		<li><a href="<%=path%>/admin/lendManage.jsp" id="item3">借还管理</a></li>
 		<li><a href="<%=path%>/admin/repairManage.jsp" id="item4">维修管理</a></li>
 		<li><a href="<%=path%>/admin/employeeManage.jsp" id="item5">员工管理</a></li>
 		<li><a href="#">打印报表</a></li>
