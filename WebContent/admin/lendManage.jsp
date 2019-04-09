@@ -22,8 +22,12 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="<%=path%>/static/css/public.css" />
+<style>
+#nav>ul>li>#item3{
+color:red
+}
+</style>
 </head>
-
 <body>
 	<jsp:include page="top.jsp"/>
 	<jsp:include page="nav.jsp"/>

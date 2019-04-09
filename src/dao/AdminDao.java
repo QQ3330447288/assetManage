@@ -9,6 +9,7 @@ import java.util.List;
 
 import entity.Admin;
 import entity.AssetInfo;
+import entity.Employee;
 import javafx.css.PseudoClass;
 import utils.Md5;
 
@@ -203,7 +204,7 @@ public class AdminDao {
 	}
 
 	/**
-	 * 添加资产
+	 * 修改资产信息
 	 * 
 	 * @param assetInfo
 	 * @return
@@ -245,4 +246,91 @@ public class AdminDao {
 		}
 		return false;
 	}
+
+	/**
+	 * 添加资产
+	 * 
+	 * @param assetInfo
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean empAdd(Employee emp) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "INSERT employee(" + "id,name,sex_id,age,department_id,post_id,address,phone,status)"
+					+ "values(?,?,?,?,?,?,?,?,?)";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, emp.getId());
+				stmt.setString(2, emp.getName());
+				stmt.setByte(3, emp.getSex_id());
+				stmt.setInt(4, emp.getAge());
+				stmt.setInt(5, emp.getDepartment_id());
+				stmt.setInt(6, emp.getPost_id());
+				stmt.setString(7, emp.getAddress());
+				stmt.setString(8, emp.getPhone());
+				stmt.setString(9, emp.getStatus());
+				int row = stmt.executeUpdate();
+				if (row >= 1) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 查询所有资产
+	 * 
+	 * @return list
+	 * @throws SQLException
+	 */
+	public List<Employee> queryEmpInfo() throws SQLException {
+		List<Employee> list = new ArrayList<Employee>();
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "SELECT *FROM employee AS e"
+					+ " INNER JOIN post AS p ON e.post_id = p.id"
+					+ " INNER JOIN department as d ON d.id = e.department_id";
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					Employee emp = new Employee();
+					emp.setId(rs.getString("id"));
+					emp.setName(rs.getString("name"));
+					emp.setSex_id(rs.getByte("sex_id"));
+					emp.setAge(rs.getInt("age"));
+					emp.setDepart_name(rs.getString("depart_name"));
+					emp.setPost_name(rs.getString("post_name"));
+					emp.setPost_id(rs.getInt("post_id"));
+					emp.setAddress(rs.getString("address"));
+					emp.setPhone(rs.getString("phone"));
+					emp.setStatus(rs.getString("status"));
+					list.add(emp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}
+		}
+		return list;
+	}
+
 }

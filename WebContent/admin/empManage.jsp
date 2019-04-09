@@ -1,3 +1,4 @@
+<%@page import="entity.Employee"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -22,6 +23,11 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="<%=path%>/static/css/public.css" />
+<style>
+#nav>ul>li>#item5 {
+	color: red
+}
+</style>
 </head>
 <body>
 	<jsp:include page="top.jsp" />
@@ -33,7 +39,7 @@
 		</div>
 		<div class="button">
 			<input name="" type="button" value="添加员工信息"
-				onclick="window.open('addemployee.jsp')" />
+				onclick="location.href='admin/addEmpInfo.jsp'" />
 		</div>
 	</div>
 	<div class="s5"></div>
@@ -51,6 +57,44 @@
 			<td align="center" bgcolor="#33FFFF">状态</td>
 			<td align="center" bgcolor="#33FFFF">操作</td>
 		</tr>
+		<%
+			List<Employee> list = (List<Employee>) request.getAttribute("list");
+			if (list == null || list.size() < 1) {
+				out.print("<tr><td bgcolor='#FFFFFF' colspan='5'>没有任何资产信息！</td></tr>");
+			} else {
+				for (Employee v : list) {
+		%>
+		<tr align="center">
+			<td><%=v.getId()%></td>
+			<td><%=v.getName()%></td>
+			<td>
+			<%
+				if(v.getSex_id()==0){
+			%>
+				男
+			<%
+				}else{
+			%>
+			女
+			<%
+				}
+			%>
+			</td>
+			<td><%=v.getAge()%></td>
+			<td><%=v.getDepart_name()%></td>
+			<td><%=v.getPost_name()%></td>
+			<td><%=v.getAddress()%></td>
+			<td><%=v.getPhone()%></td>
+			<td><%=v.getStatus()%></td>
+			<td><a
+				href="<%=path%>/QueryEditAssetServ?assetNo=<%=v.getId()%>">编辑</a><a
+				href="<%=path%>/DelAssetInfoServ?assetNo=<%=v.getId()%>">&nbsp;&nbsp;删除</a></td>
+		</tr>
+		<%
+			}
+			}
+		%>
+
 	</table>
 	<%@include file="bottom.jsp"%>
 </body>

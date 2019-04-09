@@ -13,8 +13,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>资产管理</title>
 <link rel="stylesheet" href="<%=path%>/static/css/repairManage.css" />
+<style>
+#nav>ul>li>#item4 {
+	color: red
+}
+</style>
 </head>
 <body>
 	<jsp:include page="top.jsp" />
@@ -24,17 +29,14 @@
 		<img src="images/tongs.png" width="40" height="50" />资产维修操作
 	</div>
 	<div class="s5"></div>
-	<!--end-->
-
 	<div class="form">
-		<form action="" method="get" class="inputstyle">
-			&nbsp;&nbsp;资产编号：<input name="" type="text" /> 送修时间：<input name=""
-				type="text" /> <br /> &nbsp;&nbsp;送修人&nbsp;：<input name=""
-				type="text" /> 经手人&nbsp;：<input name="" type="text" /> <br />
-
-			&nbsp;&nbsp;故障原因：
-			<textarea name="" cols="57" rows="5"></textarea>
-
+		<form action="<%=path%>/RepairInfoAddServ" method="post"
+			class="inputstyle">
+			资产编号：<input name="assetId" type="text" /> 送修时间：<input
+				name="sendRepairTime" type="text" /><br /> 送修人;：<input
+				name="sendRepairPerson" type="text" /> 经手人：<input
+				name="passHandPerson" type="text" /><br /> 故障原因：
+			<textarea name="repairReason" cols="57" rows="5"></textarea>
 		</form>
 		<div class="btn">
 			<input name="" type="button" value="确认送修" />
@@ -50,11 +52,11 @@
 		<table width="600" border="1" cellspacing="0" cellpadding="0"
 			class="tab">
 			<tr>
-				<td align="center" bgcolor="#33FFFF">资产编号</td>
-				<td align="center" bgcolor="#33FFFF">送修时间</td>
-				<td align="center" bgcolor="#33FFFF">送修人</td>
-				<td align="center" bgcolor="#33FFFF">经手人</td>
-				<td align="center" bgcolor="#33FFFF">故障原因</td>
+				<td align="center" bgcolor="#33FFFF" name="">资产编号</td>
+				<td align="center" bgcolor="#33FFFF" name="">送修时间</td>
+				<td align="center" bgcolor="#33FFFF" name="">送修人</td>
+				<td align="center" bgcolor="#33FFFF" name="">经手人</td>
+				<td align="center" bgcolor="#33FFFF" name="">故障原因</td>
 				<td align="center" bgcolor="#33FFFF">操作</td>
 			</tr>
 		</table>
