@@ -14,7 +14,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'borrowmanage.jsp' starting page</title>
+<title>借还管理</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">

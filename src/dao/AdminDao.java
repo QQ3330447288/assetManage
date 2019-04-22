@@ -9,6 +9,7 @@ import java.util.List;
 
 import entity.Admin;
 import entity.AssetInfo;
+import entity.AssetRepairInfo;
 import entity.Employee;
 import javafx.css.PseudoClass;
 import utils.Md5;
@@ -321,6 +322,79 @@ public class AdminDao {
 					emp.setPhone(rs.getString("phone"));
 					emp.setStatus(rs.getString("status"));
 					list.add(emp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}
+		}
+		return list;
+	}
+	/**
+	 * 添加维修信息
+	 * 
+	 * @param assetInfo
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean addRepairInfo(AssetRepairInfo repairInfo) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "INSERT assetrepairinfo(" + "assetId,sendRepairTime,sendRepairPerson,intermediator,reason)"
+					+ "values(?,?,?,?,?)";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, repairInfo.getAssetId());
+				stmt.setDate(2,null);
+				stmt.setString(3, repairInfo.getSendRepairPerson());
+				stmt.setString(4, repairInfo.getPassHandPerson());
+				stmt.setString(5, repairInfo.getRepairReason());
+				int row = stmt.executeUpdate();
+				if (row >= 1) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * 查询維修信息
+	 * 
+	 * @return list
+	 * @throws SQLException
+	 */
+	public List<AssetRepairInfo> queryAssetRepairInfo() throws SQLException {
+		List<AssetRepairInfo> list = new ArrayList<AssetRepairInfo>();
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "select *from assetrepairinfo";
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					AssetRepairInfo assetRepairInfo = new AssetRepairInfo();
+					assetRepairInfo.setAssetId(rs.getString("assetId"));
+					assetRepairInfo.setSendRepairTime(rs.getDate("sendRepairTime"));
+					assetRepairInfo.setSendRepairPerson(rs.getString("sendRepairPerson"));
+					assetRepairInfo.setPassHandPerson(rs.getString("intermediator"));
+					assetRepairInfo.setRepairReason(rs.getString("reason"));
+					list.add(assetRepairInfo);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

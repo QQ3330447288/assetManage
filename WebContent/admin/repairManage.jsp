@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="entity.AssetRepairInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -37,10 +39,10 @@
 				name="sendRepairPerson" type="text" /> 经手人：<input
 				name="passHandPerson" type="text" /><br /> 故障原因：
 			<textarea name="repairReason" cols="57" rows="5"></textarea>
-		</form>
 		<div class="btn">
-			<input name="" type="button" value="确认送修" />
+			<input type="submit" value="确认送修" />
 		</div>
+		</form>
 
 	</div>
 	<!--end-->
@@ -59,6 +61,25 @@
 				<td align="center" bgcolor="#33FFFF" name="">故障原因</td>
 				<td align="center" bgcolor="#33FFFF">操作</td>
 			</tr>
+				<%
+			List<AssetRepairInfo> list = (List<AssetRepairInfo>) request.getAttribute("list");
+			if (list == null || list.size() < 1) {
+				out.print("<tr><td bgcolor='#FFFFFF' colspan='5'>没有任何资产信息！</td></tr>");
+			} else {
+				for (AssetRepairInfo v : list) {
+		%>
+		<tr align="center">
+			<td><%=v.getAssetId()%></td>
+			<td><%=v.getSendRepairTime()%></td>
+			<td><%=v.getSendRepairPerson()%></td>
+			<td><%=v.getPassHandPerson()%></td>
+			<td><%=v.getRepairReason()%></td>
+			<td><a href="">编辑</a><a href="">&nbsp;&nbsp;删除</a></td>
+		</tr>
+		<%
+		}
+		}
+		%>
 		</table>
 	</div>
 	<%@include file="bottom.jsp"%>
