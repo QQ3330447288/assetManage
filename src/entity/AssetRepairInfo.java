@@ -16,7 +16,6 @@ public class AssetRepairInfo {
 
 	public AssetRepairInfo(int id, String assetId, Date sendRepairTime, String sendRepairPerson, String passHandPerson,
 			String repairReason) {
-		super();
 		this.id = id;
 		this.assetId = assetId;
 		this.sendRepairTime = sendRepairTime;

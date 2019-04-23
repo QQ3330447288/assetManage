@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,27 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.AdminDao;
-import entity.Employee;
 
-@WebServlet("/QueryEmpServ")
-public class QueryEmpServ extends HttpServlet {
+@WebServlet("/DelEmpServ")
+public class DelEmpServ extends HttpServlet {
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String id = request.getParameter("id");
 		AdminDao aDao = new AdminDao();
-		List<Employee> list;
-		try {
-			list = aDao.queryEmpInfo();
-			if (list != null) {
-				request.setAttribute("list", list);
-				request.getRequestDispatcher("/admin/empManage.jsp").forward(request, response);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (aDao.delEmp(id)) {
+			request.getRequestDispatcher("/QueryEmpServ").forward(request, response);
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
 	}
 }

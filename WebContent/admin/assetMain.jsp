@@ -72,7 +72,7 @@ color:red
 			<td><%=v.getPurchaser()%></td>
 			<td><%=v.getAssetType()%></td>
 			<td><%=v.getAssetStatus()%></td>
-			<td><a href="<%=path%>/QueryEditAssetServ?assetNo=<%=v.getAssetNo()%>">编辑</a><a href="<%=path%>/DelAssetInfoServ?assetNo=<%=v.getAssetNo()%>">&nbsp;&nbsp;删除</a></td>
+			<td><a href="<%=path%>/QueryEditAssetServ?assetNo=<%=v.getAssetNo()%>">编辑</a><a onclick="return confirm('确认删除？')" href="<%=path%>/DelAssetInfoServ?assetNo=<%=v.getAssetNo()%>">&nbsp;&nbsp;删除</a></td>
 		</tr>
 		<%
 		}

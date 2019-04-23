@@ -11,27 +11,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.AdminDao;
-import entity.Employee;
+import entity.AssetInfo;
+import entity.AssetLend;
+import entity.AssetRepairInfo;
 
-@WebServlet("/QueryEmpServ")
-public class QueryEmpServ extends HttpServlet {
+@WebServlet("/QueryAssetLendInfoServ")
+public class QueryAssetLendInfoServ extends HttpServlet {
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		AdminDao aDao = new AdminDao();
-		List<Employee> list;
+		List<AssetLend> list;
 		try {
-			list = aDao.queryEmpInfo();
-			if (list != null) {
+			list = aDao.queryAssetLendInfo();
+			if (list!=null) {
 				request.setAttribute("list", list);
-				request.getRequestDispatcher("/admin/empManage.jsp").forward(request, response);
+				request.getRequestDispatcher("/admin/lendManage.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

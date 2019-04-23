@@ -87,8 +87,8 @@
 			<td><%=v.getPhone()%></td>
 			<td><%=v.getStatus()%></td>
 			<td><a
-				href="<%=path%>/QueryEditAssetServ?assetNo=<%=v.getId()%>">编辑</a><a
-				href="<%=path%>/DelAssetInfoServ?assetNo=<%=v.getId()%>">&nbsp;&nbsp;删除</a></td>
+				href="<%=path%>/QueryEditEmpServ?id=<%=v.getId()%>">编辑</a><a  onclick="return confirm('确认删除？')"
+				href="<%=path%>/DelEmpServ?id=<%=v.getId()%>">&nbsp;&nbsp;删除</a></td>
 		</tr>
 		<%
 			}

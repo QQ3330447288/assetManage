@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import entity.Admin;
 import entity.AssetInfo;
+import entity.AssetLend;
 import entity.AssetRepairInfo;
 import entity.Employee;
 import javafx.css.PseudoClass;
@@ -249,7 +251,7 @@ public class AdminDao {
 	}
 
 	/**
-	 * 添加资产
+	 * 添加員工信息
 	 * 
 	 * @param assetInfo
 	 * @return
@@ -389,6 +391,8 @@ public class AdminDao {
 				rs = stmt.executeQuery();
 				while (rs.next()) {
 					AssetRepairInfo assetRepairInfo = new AssetRepairInfo();
+					assetRepairInfo.setId(rs.getInt("id"));
+					//System.out.println(rs.getInt("id"));
 					assetRepairInfo.setAssetId(rs.getString("assetId"));
 					assetRepairInfo.setSendRepairTime(rs.getDate("sendRepairTime"));
 					assetRepairInfo.setSendRepairPerson(rs.getString("sendRepairPerson"));
@@ -406,5 +410,339 @@ public class AdminDao {
 		}
 		return list;
 	}
+	
+	
+	/**
+	 * 借出资产
+	 * 
+	 * @param assetInfo
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean assetLendAdd(AssetLend assetLend) throws SQLException {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "INSERT lend(asset_id,employee_id,lendTime) "
+					+ "values(?,?,?)";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, assetLend.getAsset_id());
+				stmt.setString(2, assetLend.getEmployee_id());
+				stmt.setDate(3, (Date) assetLend.getLendTime());
+				int row = stmt.executeUpdate();
+				if (row >= 1) {
+					return true;
+				}
 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				stmt.close();
+				conn.close();
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 查询借还信息
+	 * 
+	 * @return list
+	 * @throws SQLException
+	 */
+	public List<AssetLend> queryAssetLendInfo() throws SQLException {
+		List<AssetLend> list = new ArrayList<AssetLend>();
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "select *from lend";
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					AssetLend assetLend = new AssetLend();
+					assetLend.setId(rs.getInt("id"));
+					assetLend.setAsset_id(rs.getString("asset_id"));
+					assetLend.setEmployee_id(rs.getString("employee_id"));
+					list.add(assetLend);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}
+		}
+		return list;
+	}
+	
+	
+	/**
+	 * 刪除借出资产
+	 * 
+	 * @param assetNo
+	 * @return
+	 */
+	public boolean delAssetLend(String lendNo) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "DELETE FROM lend WHERE id = ?";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, lendNo);
+				int row = stmt.executeUpdate();
+				System.out.println(row);
+				if (row >= 1) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * 刪除资产维修信息
+	 * 
+	 * @param assetNo
+	 * @return
+	 */
+	public boolean delAssetRepair(String id) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "DELETE FROM assetrepairinfo WHERE id = ?";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, id);
+				int row = stmt.executeUpdate();
+				System.out.println(row);
+				if (row >= 1) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * 刪除员工
+	 * 
+	 * @param assetNo
+	 * @return
+	 */
+	public boolean delEmp(String id) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "DELETE FROM employee WHERE id = ?";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, id);
+				int row = stmt.executeUpdate();
+				System.out.println(row);
+				if (row >= 1) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * 根据资产id查询
+	 * 
+	 * @param no
+	 * @return list到修改资产信息
+	 * @throws SQLException
+	 */
+	public List<AssetRepairInfo> queryRepairByNo(String id) throws SQLException {
+		List<AssetRepairInfo> list = new ArrayList<AssetRepairInfo>();
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "select *from assetrepairinfo WHERE id = ?";
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					AssetRepairInfo assetRepairInfo = new AssetRepairInfo();
+					assetRepairInfo.setAssetId(rs.getString("assetId"));
+					assetRepairInfo.setSendRepairTime(rs.getDate("sendRepairTime"));
+					assetRepairInfo.setSendRepairPerson(rs.getString("sendRepairPerson"));
+					assetRepairInfo.setPassHandPerson(rs.getString("intermediator"));
+					assetRepairInfo.setRepairReason(rs.getString("reason"));
+					assetRepairInfo.setId(rs.getInt("id"));
+					list.add(assetRepairInfo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}
+		}
+		return list;
+	}
+	
+	
+	/**
+	 * 修改维修信息
+	 * 
+	 * @param assetInfo
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean assetRepairEdit(AssetRepairInfo repairInfo) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "UPDATE assetrepairinfo SET assetId=?,sendRepairPerson=?,intermediator=?,reason=? WHERE id=?";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, repairInfo.getAssetId());
+				stmt.setString(2, repairInfo.getSendRepairPerson());
+				stmt.setString(3, repairInfo.getPassHandPerson());
+				stmt.setString(4, repairInfo.getRepairReason());
+//				System.out.println(repairInfo.getId());
+				stmt.setInt(5, repairInfo.getId());
+				int row = stmt.executeUpdate();
+				if (row >= 1) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 *员工信息修改 
+	 * 根据员工id查询
+	 * 
+	 * @param no
+	 * @return list到修改资产信息
+	 * @throws SQLException
+	 */
+	public List<Employee> queryEmpByNo(String id) throws SQLException {
+		List<Employee> list = new ArrayList<Employee>();
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "select *from employee WHERE id = ?";
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					Employee emp = new Employee();
+					emp.setId(rs.getString("id"));
+					emp.setName(rs.getString("name"));
+					emp.setSex_id(rs.getByte("sex_id"));
+					emp.setAge(rs.getInt("age"));
+					emp.setDepartment_id(rs.getInt("department_id"));
+					emp.setPost_id(rs.getInt("post_id"));
+					emp.setAddress(rs.getString("address"));
+					emp.setPhone(rs.getString("phone"));
+					emp.setStatus(rs.getString("status"));
+					list.add(emp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}
+		}
+		return list;
+	}
+	/**
+	 * 编辑員工信息
+	 * 
+	 * @param assetInfo
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean empEdit(Employee emp) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "UPDATE employee SET name=?,sex_id=?,age=?,department_id=?,post_id=?,address=?,phone=?,status=? WHERE id=?";
+			PreparedStatement stmt = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				
+				stmt.setString(1, emp.getName());
+//				System.out.println(emp.getName());
+				stmt.setByte(2, emp.getSex_id());
+				stmt.setInt(3, emp.getAge());
+				stmt.setInt(4, emp.getDepartment_id());
+				stmt.setInt(5, emp.getPost_id());
+				stmt.setString(6, emp.getAddress());
+				stmt.setString(7, emp.getPhone());
+				stmt.setString(8, emp.getStatus());
+//				System.out.println(emp.getStatus());
+				stmt.setString(9, emp.getId());
+//				System.out.println(emp.getId());
+				int row = stmt.executeUpdate();
+				if (row >= 1) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+
+	
 }

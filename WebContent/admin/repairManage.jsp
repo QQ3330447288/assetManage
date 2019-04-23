@@ -74,7 +74,7 @@
 			<td><%=v.getSendRepairPerson()%></td>
 			<td><%=v.getPassHandPerson()%></td>
 			<td><%=v.getRepairReason()%></td>
-			<td><a href="">编辑</a><a href="">&nbsp;&nbsp;删除</a></td>
+			<td><a href="<%=path%>/QueryEditRepairServ?id=<%=v.getId()%>">编辑</a><a onclick="return confirm('确认删除？')" href="<%=path%>/DelAssetRepairServ?id=<%=v.getId()%>">&nbsp;&nbsp;删除</a></td>
 		</tr>
 		<%
 		}
