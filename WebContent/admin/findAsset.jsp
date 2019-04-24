@@ -20,7 +20,7 @@
 <title>资产管理</title>
 <link rel="stylesheet" href="<%=path%>/static/css/public.css" />
 <style>
-#nav>ul>li>#item2 {
+#nav>ul>li>#item6 {
 	color: red
 }
 </style>
@@ -29,16 +29,10 @@
 	<jsp:include page="top.jsp" />
 	<jsp:include page="nav.jsp" />
 	<div class="s2"></div>
-	<div class="s3">
-		<div class="s4">
-			<a href="<%=path%>/admin/findAsset.jsp"><img
-				src="<%=path%>/static/images/Search.png" width="50" height="50" /></a>资产详细信息列表
-		</div>
-		<div class="button">
-			<a href="<%=path%>/admin/addAsset.jsp"><input name=""
-				type="button" value="增加资产信息" /></a>
-		</div>
-	</div>
+	<form action="<%=path %>/QueryAssetByNameServ" method="POST">
+		关键字检索:<input type="text" name="assetName" placeholder="请输入资产名关键字">
+		<input type="submit" value="查询">
+	</form>
 	<div class="s5"></div>
 	<table width="00" border="1" class="tab" cellpadding="0"
 		cellspacing="0">
@@ -58,7 +52,7 @@
 		<%
 			List<AssetInfo> list = (List<AssetInfo>) request.getAttribute("list");
 			if (list == null || list.size() < 1) {
-				out.print("<tr><td bgcolor='#FFFFFF' colspan='5'>没有任何资产信息！</td></tr>");
+				out.print("<tr><td bgcolor='#FFFFFF' colspan='5'>您可根据资产名关键字检索资产信息！</td></tr>");
 			} else {
 				for (AssetInfo v : list) {
 		%>

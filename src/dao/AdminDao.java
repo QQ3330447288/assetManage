@@ -303,8 +303,7 @@ public class AdminDao {
 		List<Employee> list = new ArrayList<Employee>();
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "SELECT *FROM employee AS e"
-					+ " INNER JOIN post AS p ON e.post_id = p.id"
+			String sql = "SELECT *FROM employee AS e" + " INNER JOIN post AS p ON e.post_id = p.id"
 					+ " INNER JOIN department as d ON d.id = e.department_id";
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
@@ -335,6 +334,7 @@ public class AdminDao {
 		}
 		return list;
 	}
+
 	/**
 	 * 添加维修信息
 	 * 
@@ -351,7 +351,7 @@ public class AdminDao {
 			try {
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, repairInfo.getAssetId());
-				stmt.setDate(2,null);
+				stmt.setDate(2, null);
 				stmt.setString(3, repairInfo.getSendRepairPerson());
 				stmt.setString(4, repairInfo.getPassHandPerson());
 				stmt.setString(5, repairInfo.getRepairReason());
@@ -373,6 +373,7 @@ public class AdminDao {
 		}
 		return false;
 	}
+
 	/**
 	 * 查询維修信息
 	 * 
@@ -392,7 +393,7 @@ public class AdminDao {
 				while (rs.next()) {
 					AssetRepairInfo assetRepairInfo = new AssetRepairInfo();
 					assetRepairInfo.setId(rs.getInt("id"));
-					//System.out.println(rs.getInt("id"));
+					// System.out.println(rs.getInt("id"));
 					assetRepairInfo.setAssetId(rs.getString("assetId"));
 					assetRepairInfo.setSendRepairTime(rs.getDate("sendRepairTime"));
 					assetRepairInfo.setSendRepairPerson(rs.getString("sendRepairPerson"));
@@ -410,8 +411,7 @@ public class AdminDao {
 		}
 		return list;
 	}
-	
-	
+
 	/**
 	 * 借出资产
 	 * 
@@ -422,8 +422,7 @@ public class AdminDao {
 	public boolean assetLendAdd(AssetLend assetLend) throws SQLException {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "INSERT lend(asset_id,employee_id,lendTime) "
-					+ "values(?,?,?)";
+			String sql = "INSERT lend(asset_id,employee_id,lendTime) " + "values(?,?,?)";
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
@@ -444,7 +443,7 @@ public class AdminDao {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 查询借还信息
 	 * 
@@ -478,8 +477,7 @@ public class AdminDao {
 		}
 		return list;
 	}
-	
-	
+
 	/**
 	 * 刪除借出资产
 	 * 
@@ -512,6 +510,7 @@ public class AdminDao {
 		}
 		return false;
 	}
+
 	/**
 	 * 刪除资产维修信息
 	 * 
@@ -544,6 +543,7 @@ public class AdminDao {
 		}
 		return false;
 	}
+
 	/**
 	 * 刪除员工
 	 * 
@@ -576,8 +576,7 @@ public class AdminDao {
 		}
 		return false;
 	}
-	
-	
+
 	/**
 	 * 根据资产id查询
 	 * 
@@ -616,8 +615,7 @@ public class AdminDao {
 		}
 		return list;
 	}
-	
-	
+
 	/**
 	 * 修改维修信息
 	 * 
@@ -656,9 +654,9 @@ public class AdminDao {
 		}
 		return false;
 	}
+
 	/**
-	 *员工信息修改 
-	 * 根据员工id查询
+	 * 员工信息修改 根据员工id查询
 	 * 
 	 * @param no
 	 * @return list到修改资产信息
@@ -698,6 +696,7 @@ public class AdminDao {
 		}
 		return list;
 	}
+
 	/**
 	 * 编辑員工信息
 	 * 
@@ -712,7 +711,7 @@ public class AdminDao {
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
-				
+
 				stmt.setString(1, emp.getName());
 //				System.out.println(emp.getName());
 				stmt.setByte(2, emp.getSex_id());
@@ -744,5 +743,46 @@ public class AdminDao {
 		return false;
 	}
 
-	
+	/**
+	 * 根据资产名称查询资产
+	 * 
+	 * @return list
+	 * @throws SQLException
+	 */
+	public List<AssetInfo> queryAssetByName(String assetName) throws SQLException {
+		List<AssetInfo> list = new ArrayList<AssetInfo>();
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			//System.out.println(assetName);
+			String sql = "SELECT *FROM assetInfo WHERE assetName LIKE '%" + assetName + "%'";
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					AssetInfo assetInfo = new AssetInfo();
+					assetInfo.setAssetNo(rs.getString("assetNo"));
+					assetInfo.setAssetName(rs.getString("assetName"));
+					assetInfo.setAssetUnitPrice(rs.getFloat("assetUnitPrice"));
+					assetInfo.setManufacturer(rs.getString("manufacturer"));
+					assetInfo.setAssetNum(rs.getInt("assetNum"));
+					assetInfo.setUserCompany(rs.getString("userCompany"));
+					assetInfo.setStoragePlace(rs.getString("storagePlace"));
+					assetInfo.setAssetType(rs.getString("assetType"));
+					assetInfo.setAssetStatus(rs.getString("assetStatus"));
+					assetInfo.setRemark(rs.getString("remark"));
+					assetInfo.setPurchaser(rs.getString("purchaser"));
+					list.add(assetInfo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}
+		}
+		return list;
+	}
 }
