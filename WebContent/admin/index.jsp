@@ -5,10 +5,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
 	String admin = (String) session.getAttribute("admin");
-	//System.out.print(admin);
 	if (admin == null || "".equals(admin)) {
 		response.sendRedirect("" + path + "/admin/login.jsp");
 	}
@@ -18,22 +15,24 @@
 <head>
 <meta charset="UTF-8">
 <title>资产管理</title>
-<link rel="stylesheet" href="<%=path%>/static/css/public.css" />
-<style>
-#nav>ul>li>#item1{
-color:red
-}
-</style>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 </head>
-<body onload="showTime();">
-	<jsp:include page="top.jsp" />
+<body onload="showTime();" style="margin-top: 65px">
 	<jsp:include page="nav.jsp" />
-	<div class="s2"></div>
-	<div class="s5"></div>
-	<h4>欢迎使用本系统，</h4>
-	<h4>
-		当前时间：<span id="show"></span>
-	</h4>
+	<div class="container">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li class="active">首页</li>
+			</ol>
+			<h4>欢迎使用本系统!</h4>
+			<h4>
+				当前时间：<span id="show"></span>
+			</h4>
+		</div>
+	</div>
 	<%@include file="bottom.jsp"%>
 </body>
 <script type="text/javascript">
@@ -54,6 +53,5 @@ color:red
 	　　　　document.getElementById("show").innerHTML = time;
 	　　　　setTimeout("showTime()",1000);
 	　　　　}
-	</script>
-	
+</script>
 </html>

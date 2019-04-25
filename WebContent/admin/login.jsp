@@ -2,36 +2,67 @@
 	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>登录</title>
-<link rel="stylesheet" href="<%=path%>/static/css/login.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 </head>
 <body>
-	<div class="logo">
-		<div class="go">欢迎进入高校资产管理系统！</div>
-	</div>
-	<div class="kg">
-		<div class=" form1">
-			<form action="<%=path %>/LoginServ" name="form2" method="post">
-				用户名:<input name="name" type="text" autofocus="autofocus" /><br />
-				密&nbsp;&nbsp;码:<input name="pwd" type="password" /> 
-				<br /> 
-				<br /> 
-				<br /> 
-				<input type="button" class="z" value="登录" onclick="mycheck()">
-				<input type="reset" value="重置" class="z" />
-			</form>
+	<div class="container">
+		<div class="row" style="margin-top: 30px">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="panel panel-primary" style="border-color: #a94442">
+					<div class="panel-heading" style="background: #a94442">
+						<span class="glyphicon glyphicon-user"></span>登录
+					</div>
+					<div class="panel-body">
+						<form action="<%=path%>/LoginServ" method="POST" name="loginForm">
+							<div class="form-group">
+								<label for="name">用户名</label> <input type="text"
+									class="form-control" name="name" placeholder="请输入用户名"
+									autofocus="autofocus" maxlength="15">
+							</div>
+							<div class="form-group">
+								<label for="">密码</label> <input type="password"
+									class="form-control" name="pwd" placeholder="请输入密码"
+									maxlength="20">
+							</div>
+							<button type="reset" class="btn btn-primary"
+								style="background: #a94442">重置</button>
+							<button type="submit" class="btn btn-primary"
+								onclick="return checkForm()" style="background: #a94442">登录</button>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="bottom">
-		高校资产管理系统<br> 济南大学泉城学院所有@1997-2017
-	</div>
-	<script type="text/javascript" src="<%=path%>/static/js/login.js"></script>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	function checkForm() {
+		var name = $.trim(loginForm.name.value);
+		var pwd = $.trim(loginForm.pwd.value);
+		if (name == "" || name == null) {
+			alert("请输入用户名");
+			loginForm.name.focus();
+			return false;
+		} else if (pwd == "" || pwd == null) {
+			alert("请输入密码");
+			loginForm.pwd.focus();
+			return false;
+		} else if (pwd.length < 6) {
+			alert("密码至少需要6位");
+			loginForm.pwd.focus();
+			return false;
+		}
+		return true;
+	}
+</script>
 </html>

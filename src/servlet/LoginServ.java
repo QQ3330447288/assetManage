@@ -17,7 +17,6 @@ public class LoginServ extends HttpServlet {
 		response.setContentType("text/html");
 		String name = new String(request.getParameter("name").getBytes("ISO8859_1"), "utf-8");
 		String pwd = new String(request.getParameter("pwd").getBytes("ISO8859_1"), "utf-8");
-
 		AdminDao aDao = new AdminDao();
 		if (aDao.login(name, pwd)) {
 			request.getSession().setAttribute("admin", name);

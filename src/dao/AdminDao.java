@@ -18,16 +18,15 @@ import utils.Md5;
 
 public class AdminDao {
 	/**
-	 * µÇÂ¼
+	 * ¹ÜÀíÔ±µÇÂ¼
 	 * 
 	 * @param name
 	 * @param pwd
-	 * @return ÊÇ·ñµÇÂ¼
+	 * @return boolean
 	 */
 	public boolean login(String name, String pwd) {
-		List<Admin> list = new ArrayList<Admin>();
 		Connection conn = BaseDao.getConnection();
-		pwd = Md5.md5(pwd, "xuhui");
+		pwd = Md5.md5(pwd, "Thanlon");
 		if (conn != null) {
 			String sql = "select *from admin where name='" + name + "' and pwd='" + pwd + "'";
 			PreparedStatement stmt;
