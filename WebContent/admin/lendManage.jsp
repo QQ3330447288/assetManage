@@ -10,80 +10,69 @@
 		response.sendRedirect("" + path + "/admin/login.jsp");
 	}
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-<base href="<%=basePath%>">
-
-<title>借还管理</title>
-
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" href="<%=path%>/static/css/public.css" />
-<style>
-#nav>ul>li>#item3 {
-	color: red
-}
-</style>
+<meta charset="UTF-8">
+<title>资产管理</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 </head>
 <body>
-	<jsp:include page="top.jsp" />
 	<jsp:include page="nav.jsp" />
-	<div class="s2"></div>
-	<div class="s4">
-		<img src="images/b4.png" width="40" height="40" />资产借出/归还管理
-	</div>
-	<div class="s5"></div>
-	<!--end-->
-	<div class="form">
-		<div class="form1">
-			<form action="<%=path%>/AssetLendAddServ" method="post">
-				<img src="images/redbook.png" width="48" height="48" />资产编号： <input
-					name="asset_id" type="text" /> <img src="images/employ.png"
-					width="40" height="40" />员工编号： <input name="employee_id"
-					type="text" /> <input type="submit" value="借出" />
+	<div class="container" style="margin-top: 65px">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#">借还管理</a></li>
+				<li class="active">借还信息</li>
+			</ol>
+			<form class="form-inline" style="margin-bottom: 5px">
+				<div class="form-group">
+					<label for="">资产编号：</label> <input type="text" class="form-control"
+						id="" placeholder="请输入资产编号">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail2">员工编号</label> <input type="email"
+						class="form-control" id="" placeholder="请输入员工编号">
+				</div>
+				<button type="submit" class="btn btn-primary"
+					style="background: #a94442">借出</button>
 			</form>
+			<table class="table table-hover">
+				<tr>
+					<th>借用人</th>
+					<th>资产编号</th>
+					<th>员工编号</th>
+					<th>借用时间</th>
+					<th>应还时间</th>
+					<th>归还时间</th>
+					<th>归还</th>
+				</tr>
+				<%
+					List<AssetLend> list = (List<AssetLend>) request.getAttribute("list");
+					if (list == null || list.size() < 1) {
+						out.print("<tr><td bgcolor='#FFFFFF' colspan='5'>没有任何资产信息！</td></tr>");
+					} else {
+						for (AssetLend v : list) {
+				%>
+				<tr>
+					<td></td>
+					<td><%=v.getAsset_id()%></td>
+					<td><%=v.getEmployee_id()%></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><a href="<%=path%>/DelAssetLendServ?lendNo=<%=v.getId()%>"
+						onclick="return confirm('确认归还?')">归还 </a></td>
+				</tr>
+				<%
+					}
+					}
+				%>
+			</table>
 		</div>
-		<!--end of form-->
-	</div>
-	<!--end-->
-	<div class="excel">
-		<table width="850px" border="1" cellpadding="0px" cellspacing="0px"
-			bgcolor="#33FFFF" class="tab">
-			<tr>
-				<td align="center">借用人</td>
-				<td align="center">资产编号</td>
-				<td align="center">员工编号</td>
-				<td align="center">借用时间</td>
-				<td align="center">应还时间</td>
-				<!-- <td align="center">归还时间</td> -->
-				<td align="center">归还</td>
-			</tr>
-			<%
-				List<AssetLend> list = (List<AssetLend>) request.getAttribute("list");
-				if (list == null || list.size() < 1) {
-					out.print("<tr><td bgcolor='#FFFFFF' colspan='5'>没有任何资产信息！</td></tr>");
-				} else {
-					for (AssetLend v : list) {
-			%>
-			<tr align="center">
-				<td></td>
-				<td><%=v.getAsset_id()%></td>
-				<td><%=v.getEmployee_id()%></td>
-				<td></td>
-				<td></td>
-				<td><a href="<%=path%>/DelAssetLendServ?lendNo=<%=v.getId()%>"
-					onclick="return confirm('确认归还?')">归还 </a></td>
-			</tr>
-			<%
-				}
-				}
-			%>
-		</table>
 	</div>
 	<%@include file="bottom.jsp"%>
 </body>

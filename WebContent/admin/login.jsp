@@ -17,6 +17,7 @@
 	<div class="container">
 		<div class="row" style="margin-top: 30px">
 			<div class="col-md-4 col-md-offset-4">
+				<h2 class="text-center">学校资产管理系统</h2><br>
 				<div class="panel panel-primary" style="border-color: #a94442">
 					<div class="panel-heading" style="background: #a94442">
 						<span class="glyphicon glyphicon-user"></span>登录

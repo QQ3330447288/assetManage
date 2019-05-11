@@ -23,7 +23,7 @@
 						class="sr-only">(current)</span></a></li>
 				<li><a href="<%=path%>/QueryAssetInfoServ" style="color: white">资产管理</a></li>
 				<li><a href="<%=path%>/QueryAssetLendInfoServ"
-					style="color: white">接还管理</a></li>
+					style="color: white">借还管理</a></li>
 				<li><a href="<%=path%>/QueryAssetRepairInfoServ"
 					style="color: white">维修管理</a></li>
 				<li><a href="<%=path%>/QueryEmpServ" style="color: white">员工管理</a></li>
