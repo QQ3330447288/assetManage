@@ -21,7 +21,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<%=path%>/admin/index.jsp" style="color: white">首页<span
 						class="sr-only">(current)</span></a></li>
-				<li><a href="<%=path%>/QueryAssetInfoServ" style="color: white">资产管理</a></li>
+				<li><a href="<%=path%>/QueryAssetInfoServ?page=1" style="color: white">资产管理</a></li>
 				<li><a href="<%=path%>/QueryAssetLendInfoServ"
 					style="color: white">借还管理</a></li>
 				<li><a href="<%=path%>/QueryAssetRepairInfoServ"

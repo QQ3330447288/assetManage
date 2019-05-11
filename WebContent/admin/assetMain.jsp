@@ -72,19 +72,31 @@
 					}
 				%>
 			</table>
+			<%
+				int count = (int) request.getAttribute("datacount");
+				int datacount = count / 5 + 1;
+			%>
+			<%=datacount%>
 			<nav aria-label="Page navigation" class="text-center">
 				<ul class="pagination">
-					<li><a href="#" aria-label="Previous"> <span
-							aria-hidden="true">&laquo;</span>
-					</a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#" aria-label="Next"> <span
-							aria-hidden="true">&raquo;</span>
-					</a></li>
+					<%
+						for (int i = 1; i <= datacount; i++) {
+							if (i == 1) {
+					%>
+					<li class="active"><a
+						href="<%=path%>/QueryAssetInfoServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						} else{
+					%>
+						<li><a
+						href="<%=path%>/QueryAssetInfoServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
+					
 				</ul>
 			</nav>
 		</div>
@@ -93,7 +105,7 @@
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
-			<form>
+			<form action="<%=path%>/AssetAddServ" method="post">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
@@ -105,55 +117,47 @@
 					<div class="modal-body">
 						<div class="form-inline" style="margin-top: 5px">
 							<div class="form-group">
-								<label for="">资产编号：</label> <input type="text"
-									class="form-control" id="exampleInputEmail1"
-									placeholder="Email"> <label for="">资产名称：</label><input
-									type="text" class="form-control" id="exampleInputEmail1"
-									placeholder="Email">
+								<label for="">资产编号：</label><input name="assetNo" type="text" />
+								<label for="">资产名称：</label><input name="assetName" type="text" />
 							</div>
 						</div>
 						<div class="form-inline" style="margin-top: 5px">
 							<div class="form-group">
 								<label for="">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</label>
-								<input type="text" class="form-control"
-									id="exampleInputPassword1" placeholder="Password"> <label
-									for="">生产厂商：</label> <input type="text" class="form-control"
-									id="exampleInputPassword1" placeholder="Password">
+								<input name="assetUnitPrice" type="text" /> <label for="">生产厂商：</label>
+								<input name="manufacturer" type="text" />
 							</div>
 						</div>
 						<div class="form-inline" style="margin-top: 5px">
 							<div class="form-group">
 								<label for="">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：</label>
-								<input type="text" class="form-control"
-									id="exampleInputPassword1" placeholder="Password"> <label
-									for="">使用单位：</label> <input type="text" class="form-control"
-									id="exampleInputPassword1" placeholder="Password">
+								<input type="text" name="assetNum" /> <label for="">使用单位：</label>
+								<input name="userCompany" type="text" />
 							</div>
 						</div>
 						<div class="form-inline" style="margin-top: 5px">
 							<div class="form-group">
-								<label for="">存放地点：</label> <input type="text"
-									class="form-control" id="exampleInputPassword1"
-									placeholder="Password"> <label for="">购买人：</label> <input
-									type="text" class="form-control" id="exampleInputPassword1"
-									placeholder="Password">
+								<label for="">存放地点：</label> <input name="storagePlace"
+									type="text" /><label for="">购买人：</label> <input
+									name="purchaser" type="text" />
 							</div>
 						</div>
 						<div class="form-inline" style="margin-top: 5px">
-							<label>资产类型：</label><select class="form-control">
-								<option>仪器</option>
-								<option>机电设备</option>
-								<option>电子设备</option>
-								<option>印刷设备</option>
-								<option>问题设备</option>
-							</select> <label>资产状态：</label><select class="form-control">
-								<option>正常</option>
-								<option>损坏</option>
-								<option>维修</option>
+							<label>资产类型：</label> <select name="assetType">
+								<option value="仪器">仪器</option>
+								<option value="机电设备">机电设备</option>
+								<option value="电子设备">电子设备</option>
+								<option value="印刷设备">印刷设备</option>
+								<option value="文体设备">文体设备</option>
+								<option value="工具量具">工具量具</option>
+							</select> <label>资产状态：</label><select name="assetStatus">
+								<option value="正常">正常</option>
+								<option value="损坏">损坏</option>
+								<option value="维修">维修</option>
 							</select>
 						</div>
 						<label>备注信息：</label>
-						<textarea class="form-control" rows="3"></textarea>
+						<textarea name="remark" class="form-control" rows="3"></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

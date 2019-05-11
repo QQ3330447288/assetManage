@@ -32,7 +32,7 @@ public class AssetAddServ extends HttpServlet {
 		AdminDao aDao = new AdminDao();
 		try {
 			if (aDao.assetAdd(assetInfo)) {
-				request.getRequestDispatcher("/admin/addAssetSuccess.jsp").forward(request, response);
+				request.getRequestDispatcher("/QueryAssetInfoServ").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/admin/addAssetErr.jsp").forward(request, response);
 			}

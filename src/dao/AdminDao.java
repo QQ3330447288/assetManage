@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.rowset.internal.Row;
+
 import entity.Admin;
 import entity.AssetInfo;
 import entity.AssetLend;
@@ -92,11 +94,12 @@ public class AdminDao {
 	 * @return list
 	 * @throws SQLException
 	 */
-	public List<AssetInfo> queryAssetInfo() throws SQLException {
+	public List<AssetInfo> queryAssetInfo(int page_num) throws SQLException {
 		List<AssetInfo> list = new ArrayList<AssetInfo>();
 		Connection conn = BaseDao.getConnection();
+		int perpage_size = 5;
 		if (conn != null) {
-			String sql = "select *from assetInfo";
+			String sql = "select *from assetInfo limit " + (page_num - 1) * perpage_size + "," + perpage_size + "";
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
@@ -126,6 +129,25 @@ public class AdminDao {
 			}
 		}
 		return list;
+	}
+
+	public int selectAssetCount() {
+		Connection conn = BaseDao.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		String sql = "select * from assetInfo";
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				row++;
+			}
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
 	}
 
 	/**
@@ -752,7 +774,7 @@ public class AdminDao {
 		List<AssetInfo> list = new ArrayList<AssetInfo>();
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			//System.out.println(assetName);
+			// System.out.println(assetName);
 			String sql = "SELECT *FROM assetInfo WHERE assetName LIKE '%" + assetName + "%'";
 			PreparedStatement stmt = null;
 			ResultSet rs = null;

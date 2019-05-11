@@ -15,23 +15,31 @@ import entity.AssetInfo;
 
 @WebServlet("/QueryAssetInfoServ")
 public class QueryAssetInfoServ extends HttpServlet {
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String page = request.getParameter("page");
+		if (page == null || "".equals(page)) {
+			page = "1";
+		}
+		int page_num = Integer.parseInt(page);
 		AdminDao aDao = new AdminDao();
 		List<AssetInfo> list;
 		try {
-			list = aDao.queryAssetInfo();
-			if (list!=null) {
+			list = aDao.queryAssetInfo(page_num);
+			if (list != null) {
 				request.setAttribute("list", list);
+				request.setAttribute("datacount",aDao.selectAssetCount());
+//				System.out.println("list:"+list.size());
 				request.getRequestDispatcher("/admin/assetMain.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 }
