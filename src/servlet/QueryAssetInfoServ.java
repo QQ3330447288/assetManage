@@ -28,7 +28,8 @@ public class QueryAssetInfoServ extends HttpServlet {
 			list = aDao.queryAssetInfo(page_num);
 			if (list != null) {
 				request.setAttribute("list", list);
-				request.setAttribute("datacount",aDao.selectAssetCount());
+				request.setAttribute("datacount", aDao.selectAssetCount());
+				request.setAttribute("page_num", page_num);
 //				System.out.println("list:"+list.size());
 				request.getRequestDispatcher("/admin/assetMain.jsp").forward(request, response);
 			}
@@ -36,10 +37,5 @@ public class QueryAssetInfoServ extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
 	}
 }

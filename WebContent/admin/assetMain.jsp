@@ -74,21 +74,30 @@
 			</table>
 			<%
 				int count = (int) request.getAttribute("datacount");
-				int datacount = count / 5 + 1;
+				int datacount;
+				if (count % 5 == 0) {
+					datacount = count / 5;//如果数据总条数是每页显示数量的倍数
+				} else {
+					datacount = count / 5 + 1;//根据数据总条数，计算分页数量
+				}
+
+				int page_num = (int) request.getAttribute("page_num");//获取请求的页码
 			%>
-			<%=datacount%>
 			<nav aria-label="Page navigation" class="text-center">
 				<ul class="pagination">
 					<%
 						for (int i = 1; i <= datacount; i++) {
-							if (i == 1) {
+					%>
+					<%
+						if (page_num == i) {
 					%>
 					<li class="active"><a
+						style="background: #a94442; border-color: #a94442"
 						href="<%=path%>/QueryAssetInfoServ?page=<%=i%>"><%=i%></a></li>
 					<%
-						} else{
+						} else {
 					%>
-						<li><a
+					<li class=""><a
 						href="<%=path%>/QueryAssetInfoServ?page=<%=i%>"><%=i%></a></li>
 					<%
 						}
@@ -96,7 +105,6 @@
 					<%
 						}
 					%>
-					
 				</ul>
 			</nav>
 		</div>
@@ -137,7 +145,7 @@
 						</div>
 						<div class="form-inline" style="margin-top: 5px">
 							<div class="form-group">
-								<label for="">存放地点：</label> <input name="storagePlace"
+								<label for="">存放地点：</label><input name="storagePlace"
 									type="text" /><label for="">购买人：</label> <input
 									name="purchaser" type="text" />
 							</div>

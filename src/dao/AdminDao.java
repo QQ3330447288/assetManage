@@ -29,6 +29,7 @@ public class AdminDao {
 	public boolean login(String name, String pwd) {
 		Connection conn = BaseDao.getConnection();
 		pwd = Md5.md5(pwd, "Thanlon");
+//		System.out.println(pwd);
 		if (conn != null) {
 			String sql = "select *from admin where name='" + name + "' and pwd='" + pwd + "'";
 			PreparedStatement stmt;
