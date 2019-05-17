@@ -13,9 +13,11 @@ import entity.AssetInfo;
 
 @WebServlet("/AssetAddServ")
 public class AssetAddServ extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8"); 
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		AssetInfo assetInfo = new AssetInfo();
 		assetInfo.setAssetNo(request.getParameter("assetNo"));
@@ -33,12 +35,11 @@ public class AssetAddServ extends HttpServlet {
 		try {
 			if (aDao.assetAdd(assetInfo)) {
 				request.getRequestDispatcher("/QueryAssetInfoServ").forward(request, response);
-			}else {
+			} else {
 				request.getRequestDispatcher("/admin/addAssetErr.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

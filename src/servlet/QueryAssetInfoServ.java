@@ -36,6 +36,10 @@ public class QueryAssetInfoServ extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
 	}
 }

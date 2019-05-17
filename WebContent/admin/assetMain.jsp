@@ -25,11 +25,10 @@
 	<div class="container" style="margin-top: 65px">
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><a href="#">资产管理</a></li>
+				<li><a href="javascript:;">资产管理</a></li>
 				<li class="active">资产信息</li>
 			</ol>
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal" style="background: #a94442">增加资产信息</button>
+			<a href="<%=path%>/admin/addAsset.jsp" type="button" class="btn btn-primary" style="background: #a94442">增加资产信息</a>
 			<table class="table table-hover">
 				<tr>
 					<th>资产编号</th>

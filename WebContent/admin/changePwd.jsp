@@ -8,45 +8,44 @@
 		response.sendRedirect("" + path + "/admin/login.jsp");
 	}
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-<base href="<%=basePath%>">
-<title>修改密码</title>
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" href="<%=path%>/static/css/pwd.css" />
+<meta charset="UTF-8">
+<title>资产管理</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 </head>
 <body>
-	<jsp:include page="top.jsp" />
 	<jsp:include page="nav.jsp" />
-	<div class="s2"></div>
-	<div class="s4">
-		<img src="images/draw.png" width="40" height="40" />系统用户修改密码
-	</div>
-	<div class="s5"></div>
-	<div class="s6">
-		<form action="" method="get" class="form1">
-			<div class="inputstyle">
-				<img src="images/pen.png" width="20" height="20" />旧密码：&nbsp;<input
-					name="" type="password" />
+	<div class="container" style="margin-top: 65px">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="<%=path%>/QueryAssetInfoServ">个人中心</a></li>
+				<li class="active">修改密码</li>
+			</ol>
+			<div class="col-md-4 col-md-offset-4">
+				<div class="panel panel-default">
+					<div class="panel panel-body">
+						<form action="<%=path%>/AlterPwdServ" method="post">
+							<input type="text" value="<%=admin%>" name="name" hidden="hidden">
+							<div class="form-group">
+								<label>原始密码</label> <input type="text" name="pwd"
+									class="form-control" placeholder="请输入原始密码">
+							</div>
+							<div class="form-group">
+								<label>新密码</label> <input type="text" name="newpwd"
+									class="form-control" placeholder="请输入新密码(至少6位密码)">
+							</div>
+							<input type="submit" value="修改" name="newPwd" onclick="return confirm('确认修改？')" class="btn btn-primary"
+								style="background: #a94442; border-color: #a94442">
+						</form>
+					</div>
+				</div>
 			</div>
-			<div class="inputstyle">
-				<img src="images/pen.png" width="20" height="20" />新密码：&nbsp;<input
-					name="" type="password" />
-			</div>
-			<div class="inputstyle">
-				<img src="images/pen.png" width="20" height="20" />确认密码：<input
-					name="" type="password" />
-			</div>
-			<div class="btn">
-				<input name="" type="button" value="提交" />
-			</div>
-		</form>
+		</div>
 	</div>
 	<%@include file="bottom.jsp"%>
 </body>

@@ -21,7 +21,8 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<%=path%>/admin/index.jsp" style="color: white">首页<span
 						class="sr-only">(current)</span></a></li>
-				<li><a href="<%=path%>/QueryAssetInfoServ?page=1" style="color: white">资产管理</a></li>
+				<li><a href="<%=path%>/QueryAssetInfoServ?page=1"
+					style="color: white">资产管理</a></li>
 				<li><a href="<%=path%>/QueryAssetLendInfoServ"
 					style="color: white">借还管理</a></li>
 				<li><a href="<%=path%>/QueryAssetRepairInfoServ"
@@ -46,9 +47,10 @@
 					aria-expanded="false" style="color: white"><%=admin%> <span
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
+						<li><a href="<%=path%>/admin/changePwd.jsp">修改密码</a></li>
 						<li><a href="<%=path%>/SignOutServ"
 							onclick="return confirm('确认退出系统？')">退出系统</a></li>
-						<li><a href="#">修改密码</a></li>
+
 					</ul></li>
 				<%
 					}

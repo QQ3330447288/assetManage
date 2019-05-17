@@ -150,7 +150,6 @@ public class AdminDao {
 		}
 		return row;
 	}
-
 	/**
 	 * 刪除资产信息
 	 * 
@@ -238,21 +237,21 @@ public class AdminDao {
 	public boolean assetEdit(AssetInfo assetInfo) {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "UPDATE assetInfo set assetNo=?,assetName=?,assetUnitPrice=?,manufacturer=?,assetNum=?,userCompany=?,storagePlace=?,purchaser=?,assetType=?,assetStatus=?,remark=?";
+			String sql = "UPDATE assetInfo set assetName=?,assetUnitPrice=?,manufacturer=?,assetNum=?,userCompany=?,storagePlace=?,purchaser=?,assetType=?,assetStatus=?,remark=? WHERE assetNo=?";
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, assetInfo.getAssetNo());
-				stmt.setString(2, assetInfo.getAssetName());
-				stmt.setFloat(3, assetInfo.getAssetUnitPrice());
-				stmt.setString(4, assetInfo.getManufacturer());
-				stmt.setInt(5, assetInfo.getAssetNum());
-				stmt.setString(6, assetInfo.getUserCompany());
-				stmt.setString(7, assetInfo.getStoragePlace());
-				stmt.setString(8, assetInfo.getPurchaser());
-				stmt.setString(9, assetInfo.getAssetType());
-				stmt.setString(10, assetInfo.getAssetStatus());
-				stmt.setString(11, assetInfo.getRemark());
+				stmt.setString(1, assetInfo.getAssetName());
+				stmt.setFloat(2, assetInfo.getAssetUnitPrice());
+				stmt.setString(3, assetInfo.getManufacturer());
+				stmt.setInt(4, assetInfo.getAssetNum());
+				stmt.setString(5, assetInfo.getUserCompany());
+				stmt.setString(6, assetInfo.getStoragePlace());
+				stmt.setString(7, assetInfo.getPurchaser());
+				stmt.setString(8, assetInfo.getAssetType());
+				stmt.setString(9, assetInfo.getAssetStatus());
+				stmt.setString(10, assetInfo.getRemark());
+				stmt.setString(11, assetInfo.getAssetNo());
 				int row = stmt.executeUpdate();
 				if (row >= 1) {
 					return true;
@@ -806,5 +805,56 @@ public class AdminDao {
 			}
 		}
 		return list;
+	}
+
+	public Boolean findAdmin(String name, String pwd) {
+		Connection conn = BaseDao.getConnection();
+		pwd = Md5.md5(pwd, "Thanlon");
+		if (conn != null) {
+			String sql = "SELECT count(*) FROM admin WHERE name='" + name + "' and pwd='" + pwd + "'";
+//			System.out.println(sql);
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				int row = 0;
+//				System.out.println(rs);
+				while (rs.next()) {
+					row++;
+				}
+//				System.out.println(row);
+				if (row > 0) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public Boolean alterPwd(String name, String newpwd) {
+		Connection conn = BaseDao.getConnection();
+		newpwd = Md5.md5(newpwd, "Thanlon");
+//		System.out.println(newpwd);
+		if (conn != null) {
+			String sql = "UPDATE admin set pwd='" + newpwd + "' WHERE name='" + name + "'";
+//			System.out.println(sql);
+			PreparedStatement stmt = null;
+			int row = 0;
+			try {
+				stmt = conn.prepareStatement(sql);
+				row = stmt.executeUpdate();
+				if (row > 0) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 }

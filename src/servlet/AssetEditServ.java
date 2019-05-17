@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import dao.AdminDao;
 import entity.AssetInfo;
 
-
 @WebServlet("/AssetEditServ")
 public class AssetEditServ extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8"); 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		AssetInfo assetInfo = new AssetInfo();
 		assetInfo.setAssetNo(request.getParameter("assetNo"));
@@ -29,8 +29,10 @@ public class AssetEditServ extends HttpServlet {
 		assetInfo.setAssetStatus(request.getParameter("assetStatus"));
 		assetInfo.setRemark(request.getParameter("remark"));
 		AdminDao aDao = new AdminDao();
-		if(aDao.assetEdit(assetInfo)) {
+		if (aDao.assetEdit(assetInfo)) {
 			request.getRequestDispatcher("/QueryAssetInfoServ").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/admin/editAssetErr.jsp").forward(request, response);
 		}
 	}
 }
