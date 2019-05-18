@@ -150,6 +150,25 @@ public class AdminDao {
 		}
 		return row;
 	}
+	public int selectRepairAssetCount() {
+		Connection conn = BaseDao.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		String sql = "select * from assetrepairinfo";
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				row++;
+			}
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
+	}
+
 
 	public int selectLendCount() {
 		Connection conn = BaseDao.getConnection();
@@ -387,16 +406,16 @@ public class AdminDao {
 	public boolean addRepairInfo(AssetRepairInfo repairInfo) {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "INSERT assetrepairinfo(" + "assetId,sendRepairTime,sendRepairPerson,intermediator,reason)"
-					+ "values(?,?,?,?,?)";
+			String sql = "INSERT assetrepairinfo(" + "assetId,sendRepairPerson,intermediator,reason)"
+					+ "values(?,?,?,?)";
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, repairInfo.getAssetId());
-				stmt.setDate(2, null);
-				stmt.setString(3, repairInfo.getSendRepairPerson());
-				stmt.setString(4, repairInfo.getPassHandPerson());
-				stmt.setString(5, repairInfo.getRepairReason());
+//				stmt.setDate(2, null);
+				stmt.setString(2, repairInfo.getSendRepairPerson());
+				stmt.setString(3, repairInfo.getPassHandPerson());
+				stmt.setString(4, repairInfo.getRepairReason());
 				int row = stmt.executeUpdate();
 				if (row >= 1) {
 					return true;
@@ -422,11 +441,12 @@ public class AdminDao {
 	 * @return list
 	 * @throws SQLException
 	 */
-	public List<AssetRepairInfo> queryAssetRepairInfo() throws SQLException {
+	public List<AssetRepairInfo> queryAssetRepairInfo(int page_num) throws SQLException {
 		List<AssetRepairInfo> list = new ArrayList<AssetRepairInfo>();
 		Connection conn = BaseDao.getConnection();
+		int perpage_size = 5;
 		if (conn != null) {
-			String sql = "select *from assetrepairinfo";
+			String sql = "select *from assetrepairinfo LIMIT " + (page_num - 1) * perpage_size + "," + perpage_size;
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {

@@ -16,23 +16,33 @@ import entity.AssetRepairInfo;
 @WebServlet("/RepairInfoAddServ")
 public class RepairInfoAddServ extends HttpServlet {
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8"); 
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		AssetRepairInfo repairInfo = new AssetRepairInfo();
-		repairInfo.setAssetId(request.getParameter("assetId"));
 //		repairInfo.setSendRepairTime(Date.valueOf(request.getParameter("sendRepairTime")));
-		repairInfo.setSendRepairPerson(request.getParameter("sendRepairPerson"));
-		repairInfo.setPassHandPerson(request.getParameter("passHandPerson"));
-		repairInfo.setRepairReason(request.getParameter("repairReason"));
+		String assetId = request.getParameter("assetId");
+		String sendRepairPerson = request.getParameter("sendRepairPerson");
+		String passHandPerson = request.getParameter("passHandPerson");
+		String repairReason = request.getParameter("repairReason");
+		repairInfo.setAssetId(assetId);
+		repairInfo.setSendRepairPerson(sendRepairPerson);
+		repairInfo.setPassHandPerson(passHandPerson);
+		repairInfo.setRepairReason(repairReason);
+//		System.out.println(sendRepairPerson);
 		AdminDao aDao = new AdminDao();
-		if (aDao.addRepairInfo(repairInfo)) {
-			request.getRequestDispatcher("/QueryAssetRepairInfoServ").forward(request, response);
+		if(aDao.isExists_asset(assetId)) {
+			if (aDao.addRepairInfo(repairInfo)) {
+				request.getRequestDispatcher("/QueryAssetRepairInfoServ").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/admin/errorPage/addAssetRepairErr.jsp").forward(request, response);
+			}
+			
 		}else {
-			request.getRequestDispatcher("/admin/addAssetErr.jsp").forward(request, response);
+			request.getRequestDispatcher("/admin/errorPage/repairAssetNoErr.jsp").forward(request, response);
 		}
+		
 	}
 
 }

@@ -34,27 +34,32 @@
 			<form action="<%=path%>/RepairInfoAddServ" method="post">
 				<div class="form-inline">
 					<div class="form-group">
-						<label for="">资产编号：</label> <input type="text"
-							class="form-control" id="" placeholder="请输入资产编号">
+						<label for="">资产编号：</label> <input type="text" name="assetId"
+							required="required" class="form-control" placeholder="请输入资产编号">
 					</div>
-					<div class="form-group">
-						<label for="">送修时间：</label> <input type="text"
-							class="form-control" id="" placeholder="点击选择时间">
+					<!-- 
+					<div class="form-group" >
+						<label for="" hidden="hidden">送修时间：</label> <input hidden type="text"
+							class="form-control" placeholder="点击选择时间" required="required" >
 					</div>
+					 -->
 				</div>
 				<div class="form-inline" style="margin-top: 5px">
 					<div class="form-group">
-						<label for="">送&nbsp;&nbsp;修&nbsp;&nbsp;人：</label> <input type="text" class="form-control"
-							id="" placeholder="请输入送修人信息">
+						<label for="">送&nbsp;&nbsp;修&nbsp;&nbsp;人：</label> <input
+							type="text" name="sendRepairPerson" required="required"
+							class="form-control" id="" placeholder="请输入送修人信息">
 					</div>
 					<div class="form-group">
-						<label for="">经&nbsp;&nbsp;手&nbsp;&nbsp;人:</label> <input type="text" class="form-control"
-							id="" placeholder="请输入经手人信息">
+						<label for="">经&nbsp;&nbsp;手&nbsp;&nbsp;人:</label> <input
+							type="text" name="passHandPerson" required="required"
+							class="form-control" id="" placeholder="请输入经手人信息">
 					</div>
 				</div>
-				<div style="margin-top:10px">
+				<div style="margin-top: 10px">
 					<label>故障原因：</label>
-					<textarea class="form-control" rows="3" placeholder="简要描述故障原因"></textarea>
+					<textarea class="form-control" rows="3" placeholder="简要描述故障原因"
+						required="required" name="repairReason"></textarea>
 				</div>
 				<button type="submit" class="btn btn-primary"
 					style="background: #a94442; margin-top: 5px">确认送修</button>
@@ -90,10 +95,45 @@
 					}
 				%>
 			</table>
+			<%
+				int count = (int) request.getAttribute("datacount");
+				int datacount;
+				if (count % 5 == 0) {
+					datacount = count / 5;//如果数据总条数是每页显示数量的倍数
+				} else {
+					datacount = count / 5 + 1;//根据数据总条数，计算分页数量
+				}
+
+				int page_num = (int) request.getAttribute("page_num");//获取请求的页码
+			%>
+			<nav aria-label="Page navigation" class="text-center">
+				<ul class="pagination">
+					<%
+						for (int i = 1; i <= datacount; i++) {
+					%>
+					<%
+						if (page_num == i) {
+					%>
+					<li class="active"><a
+						style="background: #a94442; border-color: #a94442"
+						href="<%=path%>/QueryAssetRepairInfoServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						} else {
+					%>
+					<li class=""><a
+						href="<%=path%>/QueryAssetRepairInfoServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
+				</ul>
+			</nav>
 		</div>
 	</div>
 	<%@include file="bottom.jsp"%>
-		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#nav-4').addClass("bg");
