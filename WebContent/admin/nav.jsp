@@ -19,19 +19,21 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="<%=path%>/admin/index.jsp" style="color: white;" id="nav-1">首页<span
-						class="sr-only">(current)</span></a></li>
+				<li><a href="<%=path%>/admin/index.jsp" style="color: white;"
+					id="nav-1">首页<span class="sr-only">(current)</span></a></li>
 				<li><a href="<%=path%>/QueryAssetInfoServ?page=1"
 					style="color: white" id="nav-2">资产管理</a></li>
 				<li><a href="<%=path%>/QueryAssetLendInfoServ"
 					style="color: white" id="nav-3">借还管理</a></li>
 				<li><a href="<%=path%>/QueryAssetRepairInfoServ"
 					style="color: white" id="nav-4">维修管理</a></li>
-				<li><a href="<%=path%>/QueryEmpServ" style="color: white" id="nav-5">员工管理</a></li>
+				<li><a href="<%=path%>/QueryEmpServ" style="color: white"
+					id="nav-5">员工管理</a></li>
 			</ul>
-			<form class="navbar-form navbar-left">
+			<form action="<%=path%>/QueryAssetByNameServ" method="get"
+				class="navbar-form navbar-left">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="输入资产名关键字">
+					<input type="text" class="form-control" name="assetName" placeholder="输入资产名关键字">
 				</div>
 				<button type="submit" class="btn btn-default">查询</button>
 			</form>

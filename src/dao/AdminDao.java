@@ -208,6 +208,25 @@ public class AdminDao {
 		return row;
 	}
 
+	public int selectAssetCountByName(String assetName) {
+		Connection conn = BaseDao.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		String sql = "SELECT * FROM assetinfo WHERE assetName LIKE '%" + assetName + "%'";
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				row++;
+			}
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
+	}
+
 	/**
 	 * 刪除资产信息
 	 * 
