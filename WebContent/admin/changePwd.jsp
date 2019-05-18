@@ -32,7 +32,7 @@
 						<form action="<%=path%>/AlterPwdServ" method="post">
 							<input type="text" value="<%=admin%>" name="name" hidden="hidden">
 							<div class="form-group">
-								<label>原始密码</label> <input type="text" name="pwd"
+								<label>原密码</label> <input type="text" name="pwd"
 									class="form-control" placeholder="请输入原始密码">
 							</div>
 							<div class="form-group">

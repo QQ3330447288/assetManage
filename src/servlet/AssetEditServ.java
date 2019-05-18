@@ -28,6 +28,9 @@ public class AssetEditServ extends HttpServlet {
 		assetInfo.setAssetType(request.getParameter("assetType"));
 		assetInfo.setAssetStatus(request.getParameter("assetStatus"));
 		assetInfo.setRemark(request.getParameter("remark"));
+		
+//		System.out.println(request.getParameter("assetNo"));
+//		System.out.println(request.getParameter("assetName"));
 		AdminDao aDao = new AdminDao();
 		if (aDao.assetEdit(assetInfo)) {
 			request.getRequestDispatcher("/QueryAssetInfoServ").forward(request, response);

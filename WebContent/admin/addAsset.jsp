@@ -23,7 +23,6 @@
 <body>
 	<jsp:include page="nav.jsp" />
 	<div class="container" style="margin-top: 65px">
-
 		<ol class="breadcrumb">
 			<li><a href="<%=path%>/QueryAssetInfoServ">资产管理</a></li>
 			<li class="active">添加资产信息</li>
@@ -32,29 +31,29 @@
 			<div class="modal-body">
 				<div class="form-inline">
 					<div class="form-group">
-						<label for="">资产编号：</label> <input name="assetNo" type="text" />
-						<label for="">&nbsp;&nbsp;资产名称：</label><input name="assetName" type="text" />
+						<label for="">资产编号：</label> <input name="assetNo" type="text" required="required"/>
+						<label for="">&nbsp;&nbsp;资产名称：</label><input name="assetName" type="text" required="required"/>
 					</div>
 				</div>
 				<div class="form-inline" style="margin-top: 5px">
 					<div class="form-group">
 						<label for="">单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</label>
-						<input name="assetUnitPrice" type="text" /> <label for="">&nbsp;&nbsp;生产厂商：</label>
-						<input name="manufacturer" type="text" />
+						<input name="assetUnitPrice" type="text" required="required"/> <label for="">&nbsp;&nbsp;生产厂商：</label>
+						<input name="manufacturer" type="text" required="required"/>
 					</div>
 				</div>
 				<div class="form-inline" style="margin-top: 5px">
 					<div class="form-group">
 						<label for="">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：</label>
-						<input type="text" name="assetNum" /> <label for="">&nbsp;&nbsp;使用单位：</label>
-						<input name="userCompany" type="text" />
+						<input type="text" name="assetNum" required="required"/> <label for="">&nbsp;&nbsp;使用单位：</label>
+						<input name="userCompany" type="text" required="required"/>
 					</div>
 				</div>
 				<div class="form-inline" style="margin-top: 5px">
 					<div class="form-group">
-						<label for="">存放地点：</label><input name="storagePlace" type="text" /><label
+						<label for="">存放地点：</label><input name="storagePlace" type="text" required="required"/><label
 							for="">&nbsp;&nbsp;&nbsp;&nbsp;购&nbsp;&nbsp;买&nbsp;&nbsp;人：</label>
-						<input name="purchaser" type="text" />
+						<input name="purchaser" type="text" required="required"/>
 					</div>
 				</div>
 				<div class="form-inline" style="margin-top: 5px">

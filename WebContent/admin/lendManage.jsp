@@ -19,6 +19,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+<link rel="stylesheet" href="<%=path%>/static/css/comm.css">
 </head>
 <body>
 	<jsp:include page="nav.jsp" />
@@ -28,14 +29,15 @@
 				<li><a href="#">借还管理</a></li>
 				<li class="active">借还信息</li>
 			</ol>
-			<form class="form-inline" style="margin-bottom: 5px">
+			<form class="form-inline" style="margin-bottom: 5px"
+				action="<%=path%>/AssetLendAddServ" method="post">
 				<div class="form-group">
 					<label for="">资产编号：</label> <input type="text" class="form-control"
-						id="" placeholder="请输入资产编号">
+						name="asset_id" placeholder="请输入资产编号" required="required">
 				</div>
 				<div class="form-group">
-					<label for="exampleInputEmail2">员工编号</label> <input type="email"
-						class="form-control" id="" placeholder="请输入员工编号">
+					<label for="exampleInputEmail2">员工编号</label> <input type="text"
+						class="form-control" name="employee_id" placeholder="请输入员工编号" required="required">
 				</div>
 				<button type="submit" class="btn btn-primary"
 					style="background: #a94442">借出</button>
@@ -47,7 +49,6 @@
 					<th>员工编号</th>
 					<th>借用时间</th>
 					<th>应还时间</th>
-					<th>归还时间</th>
 					<th>归还</th>
 				</tr>
 				<%
@@ -58,12 +59,11 @@
 						for (AssetLend v : list) {
 				%>
 				<tr>
-					<td></td>
+					<td><%=v.getLender()%></td>
 					<td><%=v.getAsset_id()%></td>
 					<td><%=v.getEmployee_id()%></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><%=v.getLendTime()%></td>
+					<td><%=v.getShouldReturnTime() %></td>
 					<td><a href="<%=path%>/DelAssetLendServ?lendNo=<%=v.getId()%>"
 						onclick="return confirm('确认归还?')">归还 </a></td>
 				</tr>
@@ -75,5 +75,11 @@
 		</div>
 	</div>
 	<%@include file="bottom.jsp"%>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#nav-3').addClass("bg");
+		});
+	</script>
 </body>
 </html>

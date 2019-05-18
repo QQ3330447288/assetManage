@@ -38,8 +38,10 @@
 					<div class="form-inline">
 						<div class="form-group">
 							<label for="">资产编号：</label> <input value="<%=v.getAssetNo()%>"
+								name="assetNo" type="text" value="<%=v.getAssetNo()%>" hidden="hidden"/>
+								<input value="<%=v.getAssetNo()%>"
 								name="assetNo" type="text" value="<%=v.getAssetNo()%>" disabled="disabled"/>
-							<label for="">&nbsp;&nbsp;资产名称：</label><input name="assetName"
+							<label for="">资产名称：</label><input name="assetName"
 								type="text" value="<%=v.getAssetName()%>">
 						</div>
 					</div>

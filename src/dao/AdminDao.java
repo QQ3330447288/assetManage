@@ -150,6 +150,7 @@ public class AdminDao {
 		}
 		return row;
 	}
+
 	/**
 	 * 刪除资产信息
 	 * 
@@ -237,7 +238,7 @@ public class AdminDao {
 	public boolean assetEdit(AssetInfo assetInfo) {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "UPDATE assetInfo set assetName=?,assetUnitPrice=?,manufacturer=?,assetNum=?,userCompany=?,storagePlace=?,purchaser=?,assetType=?,assetStatus=?,remark=? WHERE assetNo=?";
+			String sql = "UPDATE assetInfo SET assetName=?,assetUnitPrice=?,manufacturer=?,assetNum=?,userCompany=?,storagePlace=?,purchaser=?,assetType=?,assetStatus=?,remark=? WHERE assetNo=?";
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
@@ -253,6 +254,7 @@ public class AdminDao {
 				stmt.setString(10, assetInfo.getRemark());
 				stmt.setString(11, assetInfo.getAssetNo());
 				int row = stmt.executeUpdate();
+//				System.out.println(row);
 				if (row >= 1) {
 					return true;
 				}
@@ -443,18 +445,17 @@ public class AdminDao {
 	public boolean assetLendAdd(AssetLend assetLend) throws SQLException {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "INSERT lend(asset_id,employee_id,lendTime) " + "values(?,?,?)";
+			String sql = "INSERT lend(asset_id,employee_id,shouldReturnTime) " + "values(?,?,date_add(now(),interval 3 day))";
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, assetLend.getAsset_id());
 				stmt.setString(2, assetLend.getEmployee_id());
-				stmt.setDate(3, (Date) assetLend.getLendTime());
+//				stmt.setDate(3, (Date) assetLend.getLendTime());
 				int row = stmt.executeUpdate();
-				if (row >= 1) {
+				if (row > 0) {
 					return true;
 				}
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -475,8 +476,9 @@ public class AdminDao {
 		List<AssetLend> list = new ArrayList<AssetLend>();
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "select *from lend";
-			PreparedStatement stmt = null;
+			String sql = "select *from lend AS l LEFT JOIN employee AS e ON l.employee_id = e.id";
+//			System.out.println(sql);
+			PreparedStatement stmt = null; 
 			ResultSet rs = null;
 			try {
 				stmt = conn.prepareStatement(sql);
@@ -486,6 +488,9 @@ public class AdminDao {
 					assetLend.setId(rs.getInt("id"));
 					assetLend.setAsset_id(rs.getString("asset_id"));
 					assetLend.setEmployee_id(rs.getString("employee_id"));
+					assetLend.setLender(rs.getString("name"));
+					assetLend.setLendTime(rs.getDate("lendTime"));
+					assetLend.setShouldReturnTime(rs.getDate("shouldReturnTime"));
 					list.add(assetLend);
 				}
 			} catch (SQLException e) {
@@ -514,7 +519,7 @@ public class AdminDao {
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, lendNo);
 				int row = stmt.executeUpdate();
-				System.out.println(row);
+//				System.out.println(row);
 				if (row >= 1) {
 					return true;
 				}
@@ -847,6 +852,56 @@ public class AdminDao {
 			try {
 				stmt = conn.prepareStatement(sql);
 				row = stmt.executeUpdate();
+				if (row > 0) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public boolean isExists_asset(String asset_id) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "SELECT *from assetinfo WHERE assetNo='" + asset_id + "'";
+//			System.out.println(sql);
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				int row = 0;
+				while (rs.next()) {
+					row++;
+				}
+				if (row > 0) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public boolean isExists_emp(String employee_id) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "SELECT *from employee WHERE id='" + employee_id + "'";
+//			System.out.println(sql);
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				int row = 0;
+				while (rs.next()) {
+					row++;
+				}
 				if (row > 0) {
 					return true;
 				}
