@@ -151,6 +151,25 @@ public class AdminDao {
 		return row;
 	}
 
+	public int selectLendCount() {
+		Connection conn = BaseDao.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		String sql = "select * from lend";
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				row++;
+			}
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
+	}
+
 	/**
 	 * 刪除资产信息
 	 * 
@@ -445,7 +464,8 @@ public class AdminDao {
 	public boolean assetLendAdd(AssetLend assetLend) throws SQLException {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "INSERT lend(asset_id,employee_id,shouldReturnTime) " + "values(?,?,date_add(now(),interval 3 day))";
+			String sql = "INSERT lend(asset_id,employee_id,shouldReturnTime) "
+					+ "values(?,?,date_add(now(),interval 3 day))";
 			PreparedStatement stmt = null;
 			try {
 				stmt = conn.prepareStatement(sql);
@@ -472,13 +492,15 @@ public class AdminDao {
 	 * @return list
 	 * @throws SQLException
 	 */
-	public List<AssetLend> queryAssetLendInfo() throws SQLException {
+	public List<AssetLend> queryAssetLendInfo(int page_num) throws SQLException {
 		List<AssetLend> list = new ArrayList<AssetLend>();
 		Connection conn = BaseDao.getConnection();
+		int perpage_size = 5;
 		if (conn != null) {
-			String sql = "select *from lend AS l LEFT JOIN employee AS e ON l.employee_id = e.id";
+			String sql = "select *from lend AS l LEFT JOIN employee AS e ON l.employee_id = e.id limit "
+					+ (page_num - 1) * perpage_size + "," + perpage_size;
 //			System.out.println(sql);
-			PreparedStatement stmt = null; 
+			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
 				stmt = conn.prepareStatement(sql);

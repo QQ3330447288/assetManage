@@ -72,6 +72,41 @@
 					}
 				%>
 			</table>
+			<%
+				int count = (int) request.getAttribute("datacount");
+				int datacount;
+				if (count % 5 == 0) {
+					datacount = count / 5;//如果数据总条数是每页显示数量的倍数
+				} else {
+					datacount = count / 5 + 1;//根据数据总条数，计算分页数量
+				}
+
+				int page_num = (int) request.getAttribute("page_num");//获取请求的页码
+			%>
+			<nav aria-label="Page navigation" class="text-center">
+				<ul class="pagination">
+					<%
+						for (int i = 1; i <= datacount; i++) {
+					%>
+					<%
+						if (page_num == i) {
+					%>
+					<li class="active"><a
+						style="background: #a94442; border-color: #a94442"
+						href="<%=path%>/QueryAssetLendInfoServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						} else {
+					%>
+					<li class=""><a
+						href="<%=path%>/QueryAssetLendInfoServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
+				</ul>
+			</nav>
 		</div>
 	</div>
 	<%@include file="bottom.jsp"%>

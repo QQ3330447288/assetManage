@@ -20,12 +20,19 @@ public class QueryAssetLendInfoServ extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String page = request.getParameter("page");
+		if (page == null || "".equals(page)) {
+			page = "1";
+		}
+		int page_num = Integer.parseInt(page);
 		AdminDao aDao = new AdminDao();
 		List<AssetLend> list;
 		try {
-			list = aDao.queryAssetLendInfo();
+			list = aDao.queryAssetLendInfo(page_num);
 			if (list!=null) {
 				request.setAttribute("list", list);
+				request.setAttribute("datacount", aDao.selectLendCount());
+				request.setAttribute("page_num", page_num);
 				request.getRequestDispatcher("/admin/lendManage.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
