@@ -150,6 +150,7 @@ public class AdminDao {
 		}
 		return row;
 	}
+
 	public int selectRepairAssetCount() {
 		Connection conn = BaseDao.getConnection();
 		PreparedStatement stmt = null;
@@ -169,6 +170,24 @@ public class AdminDao {
 		return row;
 	}
 
+	public int selectRepairEmpCount() {
+		Connection conn = BaseDao.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		String sql = "select * from employee";
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				row++;
+			}
+			return row;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return row;
+	}
 
 	public int selectLendCount() {
 		Connection conn = BaseDao.getConnection();
@@ -360,12 +379,14 @@ public class AdminDao {
 	 * @return list
 	 * @throws SQLException
 	 */
-	public List<Employee> queryEmpInfo() throws SQLException {
+	public List<Employee> queryEmpInfo(int page_num) throws SQLException {
 		List<Employee> list = new ArrayList<Employee>();
 		Connection conn = BaseDao.getConnection();
+		int perpage_size = 5;
 		if (conn != null) {
 			String sql = "SELECT *FROM employee AS e" + " INNER JOIN post AS p ON e.post_id = p.id"
-					+ " INNER JOIN department as d ON d.id = e.department_id";
+					+ " INNER JOIN department as d ON d.id = e.department_id LIMIT " + (page_num - 1) * perpage_size
+					+ "," + perpage_size;
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			try {
@@ -930,10 +951,35 @@ public class AdminDao {
 		return false;
 	}
 
-	public boolean isExists_emp(String employee_id) {
+	public boolean isExists_emp(String id) {
 		Connection conn = BaseDao.getConnection();
 		if (conn != null) {
-			String sql = "SELECT *from employee WHERE id='" + employee_id + "'";
+			String sql = "SELECT *from employee WHERE id='" + id + "'";
+//			System.out.println(sql);
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			try {
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				int row = 0;
+				while (rs.next()) {
+					row++;
+				}
+				if (row > 0) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public boolean isExists_byname(String name) {
+		Connection conn = BaseDao.getConnection();
+		if (conn != null) {
+			String sql = "SELECT *from employee WHERE name='" + name + "'";
 //			System.out.println(sql);
 			PreparedStatement stmt = null;
 			ResultSet rs = null;

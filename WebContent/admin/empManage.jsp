@@ -28,8 +28,8 @@
 				<li><a href="#">资产管理</a></li>
 				<li class="active">资产信息</li>
 			</ol>
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#myModal" style="background: #a94442">增加员工信息</button>
+			<a href="<%=path %>/admin/addEmpInfo.jsp" type="button" class="btn btn-primary"
+				style="background: #a94442">增加员工信息</a>
 			<table class="table table-hover">
 				<tr>
 					<th>员工编号</th>
@@ -77,27 +77,61 @@
 					}
 				%>
 			</table>
+			<%
+				int count = (int) request.getAttribute("datacount");
+				int datacount;
+				if (count % 5 == 0) {
+					datacount = count / 5;//如果数据总条数是每页显示数量的倍数
+				} else {
+					datacount = count / 5 + 1;//根据数据总条数，计算分页数量
+				}
+
+				int page_num = (int) request.getAttribute("page_num");//获取请求的页码
+			%>
+			<nav aria-label="Page navigation" class="text-center">
+				<ul class="pagination">
+					<%
+						for (int i = 1; i <= datacount; i++) {
+					%>
+					<%
+						if (page_num == i) {
+					%>
+					<li class="active"><a
+						style="background: #a94442; border-color: #a94442"
+						href="<%=path%>/QueryEmpServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						} else {
+					%>
+					<li class=""><a href="<%=path%>/QueryEmpServ?page=<%=i%>"><%=i%></a></li>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
+				</ul>
+			</nav>
 		</div>
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
-			<form>
+			<form action="<%=path%>/EmpInfoAddServ" method="post">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel">添加资产信息</h4>
+						<h4 class="modal-title" id="myModalLabel">添加员工信息</h4>
 					</div>
 					<div class="modal-body">
 						<div class="form-inline" style="margin-top: 5px">
 							<div class="form-group">
 								<label for="">资产编号：</label> <input type="text"
 									class="form-control" id="exampleInputEmail1"
-									placeholder="Email"> <label for="">资产名称：</label><input
+									placeholder="Email"><label for="">资产名称：</label><input
 									type="text" class="form-control" id="exampleInputEmail1"
 									placeholder="Email">
 							</div>
@@ -154,7 +188,7 @@
 		</div>
 	</div>
 	<%@include file="bottom.jsp"%>
-		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#nav-5').addClass("bg");
